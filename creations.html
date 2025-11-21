@@ -73,7 +73,7 @@
     header {
       position: sticky;
       top: 0;
-      background: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.75);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       z-index: 1000;
@@ -130,6 +130,15 @@
       background: rgba(242, 161, 140, 0.1);
     }
 
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--gray-dark);
+    }
+
     /* ============================================
        BACK BUTTON
        ============================================ */
@@ -163,12 +172,18 @@
     }
 
     /* ============================================
-       GALLERY TITLE
+       GALLERY HEADER
        ============================================ */
-    .gallery-title {
+    .gallery-header {
       text-align: center;
+      margin: var(--gap-lg) auto var(--gap-md);
+      max-width: 1200px;
+      padding: 0 var(--gap-md);
+    }
+
+    .gallery-title {
       font-size: clamp(32px, 5vw, 48px);
-      margin: var(--gap-lg) 0 var(--gap-md);
+      margin-bottom: var(--gap-sm);
       font-weight: 700;
       background: linear-gradient(135deg, #94BFE0 0%, #F2A18C 50%, #FFB4A2 100%);
       -webkit-background-clip: text;
@@ -176,8 +191,58 @@
       background-clip: text;
     }
 
+    .gallery-subtitle {
+      color: var(--gray-medium);
+      font-size: 16px;
+      margin-bottom: var(--gap-lg);
+    }
+
     /* ============================================
-       GALLERY GRID
+       FILTERS - Touch-friendly
+       ============================================ */
+    .filters {
+      display: flex;
+      gap: var(--gap-sm);
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: var(--gap-lg);
+    }
+
+    .filter-btn {
+      padding: 12px 24px;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(242, 161, 140, 0.2);
+      border-radius: 50px;
+      color: var(--gray-medium);
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      /* Touch-friendly minimum size */
+      min-width: 44px;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .filter-btn:hover {
+      background: rgba(242, 161, 140, 0.15);
+      border-color: var(--peach);
+      transform: translateY(-2px);
+    }
+
+    .filter-btn.active {
+      background: linear-gradient(135deg, var(--peach) 0%, var(--peach-dark) 100%);
+      color: var(--white);
+      border-color: var(--peach);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* ============================================
+       GALLERY GRID - Responsive
        ============================================ */
     .gallery-container {
       max-width: 1200px;
@@ -204,10 +269,20 @@
       transition: var(--transition);
       position: relative;
       overflow: hidden;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Animation pour les cartes filtrées */
+    .creation-card.hidden {
+      opacity: 0;
+      transform: scale(0.8);
+      pointer-events: none;
+      position: absolute;
     }
 
     .creation-card:hover {
-      transform: translateY(-8px);
+      transform: translateY(-8px) scale(1);
       box-shadow: var(--shadow-lg);
       background: rgba(255, 255, 255, 0.8);
     }
@@ -247,7 +322,7 @@
       cursor: zoom-out;
     }
 
-    /* Navigation arrows */
+    /* Navigation arrows - Touch-friendly */
     .carousel-nav {
       position: absolute;
       top: 50%;
@@ -265,8 +340,11 @@
       backdrop-filter: blur(10px);
       border-radius: 50%;
       box-shadow: var(--shadow-md);
-      width: 40px;
-      height: 40px;
+      /* Touch-friendly size */
+      min-width: 44px;
+      min-height: 44px;
+      width: 44px;
+      height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -279,14 +357,25 @@
       opacity: 0;
     }
 
+    /* Arrows visible on hover (desktop) or always visible (mobile) */
     .creation-card:hover .carousel-arrow {
       opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+      .carousel-arrow {
+        opacity: 0.8;
+      }
     }
 
     .carousel-arrow:hover {
       background: var(--peach);
       color: var(--white);
       transform: scale(1.1);
+    }
+
+    .carousel-arrow:active {
+      transform: scale(0.95);
     }
 
     /* Indicateurs de position */
@@ -307,12 +396,26 @@
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.5);
       transition: var(--transition);
+      cursor: pointer;
     }
 
     .indicator.active {
       background: var(--peach);
       width: 24px;
       border-radius: 4px;
+    }
+
+    /* Catégorie badge */
+    .category-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(242, 161, 140, 0.15);
+      border: 1px solid rgba(242, 161, 140, 0.3);
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--peach);
+      margin-bottom: var(--gap-xs);
     }
 
     /* Titre de la création */
@@ -337,6 +440,11 @@
       padding: 8px;
       transition: var(--transition);
       border-radius: 8px;
+      /* Touch-friendly */
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .bio-toggle:hover {
@@ -366,22 +474,120 @@
     }
 
     /* ============================================
+       CTA CONTACT SECTION
+       ============================================ */
+    .cta-contact {
+      max-width: 700px;
+      margin: 0 auto var(--gap-xl);
+      padding: 0 var(--gap-md);
+      text-align: center;
+    }
+
+    .cta-contact-box {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(10px);
+      padding: var(--gap-lg);
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: var(--shadow-md);
+    }
+
+    .cta-contact h2 {
+      font-size: clamp(28px, 4vw, 36px);
+      margin-bottom: var(--gap-sm);
+      background: linear-gradient(135deg, var(--blue) 0%, var(--peach) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cta-contact p {
+      color: var(--gray-medium);
+      font-size: 16px;
+      margin-bottom: var(--gap-md);
+    }
+
+    .cta-contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 40px;
+      background: linear-gradient(135deg, var(--peach) 0%, var(--peach-dark) 100%);
+      color: var(--white);
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: 16px;
+      transition: var(--transition);
+      box-shadow: var(--shadow-md);
+      min-height: 44px;
+    }
+
+    .cta-contact-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+    footer {
+      padding: var(--gap-md);
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.6);
+      position: relative;
+      z-index: 1;
+    }
+
+    footer p {
+      color: var(--gray-light);
+      font-size: 14px;
+    }
+
+    /* ============================================
        RESPONSIVE
        ============================================ */
     @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        right: -100%;
+        width: 280px;
+        height: calc(100vh - 70px);
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        padding: var(--gap-md);
+        box-shadow: var(--shadow-lg);
+        transition: right 0.3s ease;
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
       .gallery-container {
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: var(--gap-sm);
       }
 
       .image-carousel {
-        height: 220px;
+        height: 240px;
       }
 
-      .carousel-arrow {
-        width: 36px;
-        height: 36px;
-        font-size: 18px;
+      .filters {
+        gap: var(--gap-xs);
+      }
+
+      .filter-btn {
+        font-size: 14px;
+        padding: 10px 20px;
       }
     }
 
@@ -433,11 +639,12 @@
         </svg>
         <span><strong>Eliot</strong> SAURON</span>
       </a>
-      <ul class="nav-links">
+      <ul class="nav-links" id="navLinks">
         <li><a href="index.html#projets">Mes créations</a></li>
         <li><a href="index.html#about">À propos</a></li>
         <li><a href="index.html#contact">Contact</a></li>
       </ul>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu de navigation">☰</button>
     </nav>
   </header>
 
@@ -448,13 +655,27 @@
     </button>
   </div>
 
+  <!-- GALLERY HEADER -->
+  <div class="gallery-header">
+    <h1 class="gallery-title">Galerie de créations</h1>
+    <p class="gallery-subtitle">Explorez mes projets en photographie, graphisme et design visuel</p>
+    
+    <!-- FILTERS -->
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">Tous</button>
+      <button class="filter-btn" data-filter="photo">📸 Photo</button>
+      <button class="filter-btn" data-filter="graphisme">🎨 Graphisme</button>
+      <button class="filter-btn" data-filter="reportage">📷 Reportage</button>
+      <button class="filter-btn" data-filter="branding">💼 Branding</button>
+    </div>
+  </div>
+
   <!-- GALLERY -->
-  <h1 class="gallery-title">Galerie de créations</h1>
-  
   <div class="gallery-container" id="gallery">
     
     <!-- CRÉATION 1 : Festival de musique -->
-    <article class="creation-card">
+    <article class="creation-card" data-category="photo">
+      <span class="category-badge">Photo</span>
       <div class="image-carousel">
         <div class="carousel-track">
           <img src="img/creation1-1.jpg" alt="Festival de musique - Photo 1" class="carousel-image">
@@ -475,7 +696,8 @@
     </article>
 
     <!-- CRÉATION 2 : Portrait studio -->
-    <article class="creation-card">
+    <article class="creation-card" data-category="photo">
+      <span class="category-badge">Photo</span>
       <div class="image-carousel">
         <div class="carousel-track">
           <img src="img/creation2-1.jpg" alt="Portrait studio - Photo 1" class="carousel-image">
@@ -495,7 +717,8 @@
     </article>
 
     <!-- CRÉATION 3 : Affiche événementielle -->
-    <article class="creation-card">
+    <article class="creation-card" data-category="graphisme">
+      <span class="category-badge">Graphisme</span>
       <div class="image-carousel">
         <div class="carousel-track">
           <img src="img/creation3-1.jpg" alt="Affiche événementielle" class="carousel-image">
@@ -516,7 +739,8 @@
     </article>
 
     <!-- CRÉATION 4 : Reportage mariage -->
-    <article class="creation-card">
+    <article class="creation-card" data-category="reportage">
+      <span class="category-badge">Reportage</span>
       <div class="image-carousel">
         <div class="carousel-track">
           <img src="img/creation4-1.jpg" alt="Mariage - Cérémonie" class="carousel-image">
@@ -538,7 +762,8 @@
     </article>
 
     <!-- CRÉATION 5 : Branding pour entreprise -->
-    <article class="creation-card">
+    <article class="creation-card" data-category="branding">
+      <span class="category-badge">Branding</span>
       <div class="image-carousel">
         <div class="carousel-track">
           <img src="img/creation5-1.jpg" alt="Logo entreprise" class="carousel-image">
@@ -559,173 +784,4 @@
     </article>
 
     <!-- CRÉATION 6 : Série urbaine -->
-    <article class="creation-card">
-      <div class="image-carousel">
-        <div class="carousel-track">
-          <img src="img/creation6-1.jpg" alt="Urbain - Rue" class="carousel-image">
-          <img src="img/creation6-2.jpg" alt="Urbain - Architecture" class="carousel-image">
-          <img src="img/creation6-3.jpg" alt="Urbain - Ambiance" class="carousel-image">
-        </div>
-        <div class="carousel-nav">
-          <button class="carousel-arrow carousel-prev" aria-label="Image précédente">‹</button>
-          <button class="carousel-arrow carousel-next" aria-label="Image suivante">›</button>
-        </div>
-        <div class="carousel-indicators"></div>
-      </div>
-      <h2 class="creation-title">Photo • Urbain</h2>
-      <span class="bio-toggle">+ d'infos</span>
-      <div class="bio-content">
-        Série photographique explorant l'architecture et l'ambiance de Strasbourg au petit matin. Jeu sur les lumières rasantes, les ombres portées et les perspectives. Projet personnel visant à montrer la ville sous un angle poétique et contemplatif, loin de l'agitation touristique.
-      </div>
-    </article>
-
-  </div>
-
-  <!-- JAVASCRIPT -->
-  <script>
-    // ================================================
-    // GESTION DES CAROUSELS AVEC NAVIGATION INFINIE
-    // ================================================
-    document.querySelectorAll('.creation-card').forEach(card => {
-      const track = card.querySelector('.carousel-track');
-      const images = card.querySelectorAll('.carousel-image');
-      const prevBtn = card.querySelector('.carousel-prev');
-      const nextBtn = card.querySelector('.carousel-next');
-      const indicatorsContainer = card.querySelector('.carousel-indicators');
-      
-      let currentIndex = 0;
-      const totalImages = images.length;
-
-      // Créer les indicateurs
-      for (let i = 0; i < totalImages; i++) {
-        const indicator = document.createElement('div');
-        indicator.classList.add('indicator');
-        if (i === 0) indicator.classList.add('active');
-        indicatorsContainer.appendChild(indicator);
-      }
-
-      const indicators = card.querySelectorAll('.indicator');
-
-      // Fonction pour mettre à jour le carousel
-      function updateCarousel() {
-        track.style.transform = `translateX(-${currentIndex * 100}%)`;
-        
-        // Mettre à jour les indicateurs
-        indicators.forEach((ind, idx) => {
-          ind.classList.toggle('active', idx === currentIndex);
-        });
-      }
-
-      // Navigation précédente AVEC BOUCLE INFINIE
-      prevBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        // Si on est à la première image, on va à la dernière
-        if (currentIndex === 0) {
-          currentIndex = totalImages - 1;
-        } else {
-          currentIndex--;
-        }
-        updateCarousel();
-      });
-
-      // Navigation suivante AVEC BOUCLE INFINIE
-      nextBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        // Si on est à la dernière image, on revient à la première
-        if (currentIndex === totalImages - 1) {
-          currentIndex = 0;
-        } else {
-          currentIndex++;
-        }
-        updateCarousel();
-      });
-
-      // Zoom sur clic d'image
-      images.forEach(img => {
-        img.addEventListener('click', (e) => {
-          e.stopPropagation();
-          img.classList.toggle('zoomed');
-        });
-      });
-
-      // Navigation clavier (quand le carousel est focus) AVEC BOUCLE INFINIE
-      card.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') {
-          if (currentIndex === 0) {
-            currentIndex = totalImages - 1;
-          } else {
-            currentIndex--;
-          }
-          updateCarousel();
-        } else if (e.key === 'ArrowRight') {
-          if (currentIndex === totalImages - 1) {
-            currentIndex = 0;
-          } else {
-            currentIndex++;
-          }
-          updateCarousel();
-        }
-      });
-
-      // Rendre la carte focusable pour la navigation clavier
-      card.setAttribute('tabindex', '0');
-
-      // Init
-      updateCarousel();
-    });
-
-    // ================================================
-    // TOGGLE BIO
-    // ================================================
-    document.querySelectorAll('.bio-toggle').forEach(toggle => {
-      toggle.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const bioContent = this.nextElementSibling;
-        const isOpen = bioContent.classList.contains('open');
-        
-        if (isOpen) {
-          bioContent.classList.remove('open');
-          this.textContent = '+ d\'infos';
-        } else {
-          bioContent.classList.add('open');
-          this.textContent = '− Masquer';
-        }
-      });
-    });
-
-    // ================================================
-    // NAVIGATION CLAVIER GLOBALE
-    // ================================================
-    let focusedCardIndex = -1;
-    const cards = Array.from(document.querySelectorAll('.creation-card'));
-
-    document.addEventListener('keydown', (e) => {
-      // Si une carte est focus, on gère la navigation interne (déjà fait ci-dessus)
-      // Sinon, on peut naviguer entre les cartes
-      if (focusedCardIndex === -1) return;
-
-      if (e.key === 'ArrowDown' && focusedCardIndex < cards.length - 1) {
-        focusedCardIndex++;
-        cards[focusedCardIndex].focus();
-        cards[focusedCardIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
-      } else if (e.key === 'ArrowUp' && focusedCardIndex > 0) {
-        focusedCardIndex--;
-        cards[focusedCardIndex].focus();
-        cards[focusedCardIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    });
-
-    // Détecter quelle carte a le focus
-    cards.forEach((card, index) => {
-      card.addEventListener('focus', () => {
-        focusedCardIndex = index;
-      });
-      card.addEventListener('blur', () => {
-        if (focusedCardIndex === index) {
-          focusedCardIndex = -1;
-        }
-      });
-    });
-  </script>
-</body>
-</html>
+    <article
