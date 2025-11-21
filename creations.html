@@ -3,32 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Galerie de créations — Eliot SAURON</title>
+  <title>Galerie de créations – Eliot SAURON</title>
   <style>
-    /* ============================================
-       VARIABLES
-       ============================================ */
     :root {
       --peach-light: #FFF5F0;
       --peach-soft: #FFE5D9;
       --peach: #F2A18C;
       --peach-dark: #E08B73;
-      
       --blue-light: #F6F9FC;
       --blue-soft: #E8F1F8;
       --blue: #7FA6C6;
-      
       --gray-dark: #2C2C2C;
       --gray-medium: #666666;
       --gray-light: #888888;
       --white: #FFFFFF;
-      
       --gap-xs: 8px;
       --gap-sm: 16px;
       --gap-md: 32px;
       --gap-lg: 48px;
       --gap-xl: 80px;
-      
       --radius: 16px;
       --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -36,9 +29,6 @@
       --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
     }
 
-    /* ============================================
-       BASE
-       ============================================ */
     * {
       margin: 0;
       padding: 0;
@@ -67,9 +57,66 @@
       z-index: 0;
     }
 
-    /* ============================================
-       HEADER - Glassmorphism
-       ============================================ */
+    /* LOADER */
+    .page-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--peach-light) 0%, var(--blue-light) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .page-loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-content {
+      text-align: center;
+    }
+
+    .loader-dots {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .loader-dots span {
+      width: 16px;
+      height: 16px;
+      background: var(--peach);
+      border-radius: 50%;
+      animation: bounce-dot 1.4s infinite ease-in-out;
+    }
+
+    .loader-dots span:nth-child(1) { animation-delay: 0s; }
+    .loader-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .loader-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes bounce-dot {
+      0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+      40% { transform: scale(1.3); opacity: 1; }
+    }
+
+    .loader-text {
+      color: var(--gray-medium);
+      font-size: 16px;
+      animation: pulse-text 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse-text {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    /* HEADER */
     header {
       position: sticky;
       top: 0;
@@ -109,6 +156,32 @@
       height: 26px;
     }
 
+    .logo-svg path {
+      stroke-dasharray: 200;
+      stroke-dashoffset: 200;
+      animation: draw-logo 2s ease-in-out forwards, glow-pulse 3s ease-in-out 2s infinite;
+    }
+
+    @keyframes draw-logo {
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% { filter: drop-shadow(0 0 2px rgba(242, 161, 140, 0.6)); }
+      50% { filter: drop-shadow(0 0 8px rgba(242, 161, 140, 0.9)); }
+    }
+
+    .logo span {
+      display: inline-block;
+      opacity: 0;
+      animation: fade-in-text 0.5s ease forwards;
+      animation-delay: 1.5s;
+    }
+
+    @keyframes fade-in-text {
+      to { opacity: 1; }
+    }
+
     .nav-links {
       display: flex;
       gap: var(--gap-md);
@@ -123,11 +196,28 @@
       padding: 8px 16px;
       border-radius: 20px;
       transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      width: 60%;
+      height: 2px;
+      background: var(--peach);
+      transition: transform 0.3s ease;
     }
 
     .nav-links a:hover {
       color: var(--peach);
       background: rgba(242, 161, 140, 0.1);
+    }
+
+    .nav-links a:hover::after {
+      transform: translateX(-50%) scaleX(1);
     }
 
     .menu-toggle {
@@ -137,15 +227,22 @@
       font-size: 24px;
       cursor: pointer;
       color: var(--gray-dark);
+      width: 44px;
+      height: 44px;
     }
 
-    /* ============================================
-       BACK BUTTON
-       ============================================ */
+    /* BACK BUTTON */
     .back-button {
       max-width: 1200px;
       margin: var(--gap-md) auto 0;
       padding: 0 var(--gap-md);
+      opacity: 0;
+      animation: fadeInUp 0.6s ease 0.3s forwards;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .back-button button {
@@ -171,9 +268,7 @@
       box-shadow: var(--shadow-md);
     }
 
-    /* ============================================
-       GALLERY HEADER
-       ============================================ */
+    /* GALLERY HEADER */
     .gallery-header {
       text-align: center;
       margin: var(--gap-lg) auto var(--gap-md);
@@ -189,23 +284,27 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease 0.2s forwards;
     }
 
     .gallery-subtitle {
       color: var(--gray-medium);
       font-size: 16px;
       margin-bottom: var(--gap-lg);
+      opacity: 0;
+      animation: fadeInUp 0.8s ease 0.3s forwards;
     }
 
-    /* ============================================
-       FILTERS - Touch-friendly
-       ============================================ */
+    /* FILTERS */
     .filters {
       display: flex;
       gap: var(--gap-sm);
       justify-content: center;
       flex-wrap: wrap;
       margin-bottom: var(--gap-lg);
+      opacity: 0;
+      animation: fadeInUp 0.8s ease 0.4s forwards;
     }
 
     .filter-btn {
@@ -218,9 +317,8 @@
       font-size: 15px;
       font-weight: 500;
       cursor: pointer;
-      transition: var(--transition);
+      transition: all 0.3s ease;
       box-shadow: var(--shadow-sm);
-      /* Touch-friendly minimum size */
       min-width: 44px;
       min-height: 44px;
       display: inline-flex;
@@ -232,6 +330,7 @@
       background: rgba(242, 161, 140, 0.15);
       border-color: var(--peach);
       transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(242, 161, 140, 0.3);
     }
 
     .filter-btn.active {
@@ -241,9 +340,7 @@
       box-shadow: var(--shadow-md);
     }
 
-    /* ============================================
-       GALLERY GRID - Responsive
-       ============================================ */
+    /* GALLERY GRID */
     .gallery-container {
       max-width: 1200px;
       margin: 0 auto var(--gap-xl);
@@ -255,9 +352,7 @@
       z-index: 1;
     }
 
-    /* ============================================
-       CREATION CARD - Glassmorphism Apple-like
-       ============================================ */
+    /* CREATION CARD */
     .creation-card {
       background: rgba(255, 255, 255, 0.65);
       backdrop-filter: blur(15px);
@@ -266,14 +361,24 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow-sm);
       padding: var(--gap-sm);
-      transition: var(--transition);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
-      opacity: 1;
-      transform: scale(1);
+      opacity: 0;
+      transform: scale(0.95) translateY(20px);
     }
 
-    /* Animation pour les cartes filtrées */
+    .creation-card.visible {
+      animation: card-fade-in 0.6s ease forwards;
+    }
+
+    @keyframes card-fade-in {
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
     .creation-card.hidden {
       opacity: 0;
       transform: scale(0.8);
@@ -282,12 +387,12 @@
     }
 
     .creation-card:hover {
-      transform: translateY(-8px) scale(1);
+      transform: translateY(-8px) scale(1.02);
       box-shadow: var(--shadow-lg);
       background: rgba(255, 255, 255, 0.8);
     }
 
-    /* Carrousel d'images */
+    /* CAROUSEL */
     .image-carousel {
       position: relative;
       width: 100%;
@@ -300,7 +405,7 @@
 
     .carousel-track {
       display: flex;
-      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
       height: 100%;
     }
 
@@ -316,13 +421,6 @@
       transform: scale(1.02);
     }
 
-    /* Image zoomée */
-    .carousel-image.zoomed {
-      transform: scale(1.5);
-      cursor: zoom-out;
-    }
-
-    /* Navigation arrows - Touch-friendly */
     .carousel-nav {
       position: absolute;
       top: 50%;
@@ -340,7 +438,6 @@
       backdrop-filter: blur(10px);
       border-radius: 50%;
       box-shadow: var(--shadow-md);
-      /* Touch-friendly size */
       min-width: 44px;
       min-height: 44px;
       width: 44px;
@@ -352,12 +449,11 @@
       border: none;
       cursor: pointer;
       pointer-events: auto;
-      transition: var(--transition);
+      transition: all 0.3s ease;
       color: var(--gray-dark);
       opacity: 0;
     }
 
-    /* Arrows visible on hover (desktop) or always visible (mobile) */
     .creation-card:hover .carousel-arrow {
       opacity: 1;
     }
@@ -371,14 +467,9 @@
     .carousel-arrow:hover {
       background: var(--peach);
       color: var(--white);
-      transform: scale(1.1);
+      transform: scale(1.15);
     }
 
-    .carousel-arrow:active {
-      transform: scale(0.95);
-    }
-
-    /* Indicateurs de position */
     .carousel-indicators {
       display: flex;
       gap: 6px;
@@ -395,7 +486,7 @@
       height: 8px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.5);
-      transition: var(--transition);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
     }
 
@@ -405,7 +496,6 @@
       border-radius: 4px;
     }
 
-    /* Catégorie badge */
     .category-badge {
       display: inline-block;
       padding: 6px 14px;
@@ -418,7 +508,6 @@
       margin-bottom: var(--gap-xs);
     }
 
-    /* Titre de la création */
     .creation-title {
       font-weight: 600;
       font-size: 18px;
@@ -427,10 +516,10 @@
       color: var(--gray-dark);
     }
 
-    /* Toggle bio */
     .bio-toggle {
-      display: block;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
       color: var(--peach);
       text-decoration: none;
@@ -440,11 +529,7 @@
       padding: 8px;
       transition: var(--transition);
       border-radius: 8px;
-      /* Touch-friendly */
       min-height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     .bio-toggle:hover {
@@ -452,7 +537,6 @@
       color: var(--peach-dark);
     }
 
-    /* Bio content */
     .bio-content {
       max-height: 0;
       overflow: hidden;
@@ -473,9 +557,7 @@
       margin-top: var(--gap-xs);
     }
 
-    /* ============================================
-       CTA CONTACT SECTION
-       ============================================ */
+    /* CTA CONTACT */
     .cta-contact {
       max-width: 700px;
       margin: 0 auto var(--gap-xl);
@@ -528,9 +610,7 @@
       box-shadow: var(--shadow-lg);
     }
 
-    /* ============================================
-       FOOTER
-       ============================================ */
+    /* FOOTER */
     footer {
       padding: var(--gap-md);
       background: rgba(255, 255, 255, 0.5);
@@ -546,9 +626,7 @@
       font-size: 14px;
     }
 
-    /* ============================================
-       RESPONSIVE
-       ============================================ */
+    /* RESPONSIVE */
     @media (max-width: 768px) {
       .nav-links {
         position: fixed;
@@ -580,54 +658,36 @@
       .image-carousel {
         height: 240px;
       }
-
-      .filters {
-        gap: var(--gap-xs);
-      }
-
-      .filter-btn {
-        font-size: 14px;
-        padding: 10px 20px;
-      }
     }
 
     @media (max-width: 480px) {
       .gallery-container {
         grid-template-columns: 1fr;
       }
-
-      .image-carousel {
-        height: 260px;
-      }
     }
 
-    /* ============================================
-       ANIMATIONS
-       ============================================ */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
       }
     }
-
-    .creation-card {
-      animation: fadeIn 0.6s ease forwards;
-    }
-
-    .creation-card:nth-child(1) { animation-delay: 0.05s; }
-    .creation-card:nth-child(2) { animation-delay: 0.1s; }
-    .creation-card:nth-child(3) { animation-delay: 0.15s; }
-    .creation-card:nth-child(4) { animation-delay: 0.2s; }
-    .creation-card:nth-child(5) { animation-delay: 0.25s; }
-    .creation-card:nth-child(6) { animation-delay: 0.3s; }
   </style>
 </head>
 <body>
+
+  <!-- LOADER -->
+  <div class="page-loader">
+    <div class="loader-content">
+      <div class="loader-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <p class="loader-text">Chargement...</p>
+    </div>
+  </div>
 
   <!-- HEADER -->
   <header>
@@ -688,76 +748,10 @@
         </div>
         <div class="carousel-indicators"></div>
       </div>
-      <h2 class="creation-title">Festival • Été 2024</h2>
-      <span class="bio-toggle">+ d'infos</span>
-      <div class="bio-content">
-        Couverture photo complète d'un festival de musique électronique en plein air. Captation des ambiances nocturnes, portraits d'artistes en backstage et moments forts sur scène. Le défi était de saisir l'énergie brute et l'atmosphère unique de ces trois jours de célébration musicale.
-      </div>
-    </article>
-
-    <!-- CRÉATION 2 : Portrait studio -->
-    <article class="creation-card" data-category="photo">
-      <span class="category-badge">Photo</span>
-      <div class="image-carousel">
-        <div class="carousel-track">
-          <img src="img/creation2-1.jpg" alt="Portrait studio - Photo 1" class="carousel-image">
-          <img src="img/creation2-2.jpg" alt="Portrait studio - Photo 2" class="carousel-image">
-        </div>
-        <div class="carousel-nav">
-          <button class="carousel-arrow carousel-prev" aria-label="Image précédente">‹</button>
-          <button class="carousel-arrow carousel-next" aria-label="Image suivante">›</button>
-        </div>
-        <div class="carousel-indicators"></div>
-      </div>
-      <h2 class="creation-title">Portrait • Studio</h2>
-      <span class="bio-toggle">+ d'infos</span>
-      <div class="bio-content">
-        Série de portraits en studio pour un artiste local. Travail sur les jeux de lumière, création d'une atmosphère intimiste avec un éclairage doux. L'objectif était de révéler la personnalité et la sensibilité de l'artiste à travers des prises minimalistes et élégantes.
-      </div>
-    </article>
-
-    <!-- CRÉATION 3 : Affiche événementielle -->
-    <article class="creation-card" data-category="graphisme">
-      <span class="category-badge">Graphisme</span>
-      <div class="image-carousel">
-        <div class="carousel-track">
-          <img src="img/creation3-1.jpg" alt="Affiche événementielle" class="carousel-image">
-          <img src="img/creation3-2.jpg" alt="Déclinaisons réseaux sociaux" class="carousel-image">
-          <img src="img/creation3-3.jpg" alt="Mockup final" class="carousel-image">
-        </div>
-        <div class="carousel-nav">
-          <button class="carousel-arrow carousel-prev" aria-label="Image précédente">‹</button>
-          <button class="carousel-arrow carousel-next" aria-label="Image suivante">›</button>
-        </div>
-        <div class="carousel-indicators"></div>
-      </div>
-      <h2 class="creation-title">Graphisme • Affiche</h2>
-      <span class="bio-toggle">+ d'infos</span>
-      <div class="bio-content">
-        Conception graphique d'une affiche pour un événement culturel local. Création d'une identité visuelle cohérente avec déclinaisons pour les réseaux sociaux. Le style mêle typographie expressive et palette de couleurs pastel pour un rendu moderne et accessible.
-      </div>
-    </article>
-
-    <!-- CRÉATION 4 : Reportage mariage -->
-    <article class="creation-card" data-category="reportage">
-      <span class="category-badge">Reportage</span>
-      <div class="image-carousel">
-        <div class="carousel-track">
-          <img src="img/creation4-1.jpg" alt="Mariage - Cérémonie" class="carousel-image">
-          <img src="img/creation4-2.jpg" alt="Mariage - Portraits" class="carousel-image">
-          <img src="img/creation4-3.jpg" alt="Mariage - Réception" class="carousel-image">
-          <img src="img/creation4-4.jpg" alt="Mariage - Détails" class="carousel-image">
-        </div>
-        <div class="carousel-nav">
-          <button class="carousel-arrow carousel-prev" aria-label="Image précédente">‹</button>
-          <button class="carousel-arrow carousel-next" aria-label="Image suivante">›</button>
-        </div>
-        <div class="carousel-indicators"></div>
-      </div>
       <h2 class="creation-title">Reportage • Mariage</h2>
       <span class="bio-toggle">+ d'infos</span>
       <div class="bio-content">
-        Reportage complet d'un mariage en Alsace. De la préparation jusqu'à la soirée, captation des émotions et des moments spontanés. Approche documentaire et naturelle pour raconter l'histoire de cette journée unique sans mise en scène artificielle.
+        Reportage complet d'un mariage en Alsace. De la préparation jusqu'à la soirée, captation des émotions et des moments spontanés.
       </div>
     </article>
 
@@ -779,9 +773,308 @@
       <h2 class="creation-title">Branding • Entreprise</h2>
       <span class="bio-toggle">+ d'infos</span>
       <div class="bio-content">
-        Création d'identité visuelle complète pour une start-up locale. Design du logo, définition de la charte graphique, et déclinaisons sur différents supports (cartes de visite, site web, réseaux sociaux). Collaboration étroite avec l'équipe pour refléter leurs valeurs d'innovation et de proximité.
+        Création d'identité visuelle complète pour une start-up locale. Design du logo, définition de la charte graphique, et déclinaisons sur différents supports.
       </div>
     </article>
 
     <!-- CRÉATION 6 : Série urbaine -->
-    <article
+    <article class="creation-card" data-category="photo">
+      <span class="category-badge">Photo</span>
+      <div class="image-carousel">
+        <div class="carousel-track">
+          <img src="img/creation6-1.jpg" alt="Série urbaine - Photo 1" class="carousel-image">
+          <img src="img/creation6-2.jpg" alt="Série urbaine - Photo 2" class="carousel-image">
+          <img src="img/creation6-3.jpg" alt="Série urbaine - Photo 3" class="carousel-image">
+        </div>
+        <div class="carousel-nav">
+          <button class="carousel-arrow carousel-prev" aria-label="Image précédente">‹</button>
+          <button class="carousel-arrow carousel-next" aria-label="Image suivante">›</button>
+        </div>
+        <div class="carousel-indicators"></div>
+      </div>
+      <h2 class="creation-title">Photo • Urbain</h2>
+      <span class="bio-toggle">+ d'infos</span>
+      <div class="bio-content">
+        Exploration photographique de la ville au crépuscule. Jeu sur les lumières artificielles, les reflets et l'architecture contemporaine.
+      </div>
+    </article>
+
+  </div>
+
+  <!-- CTA CONTACT -->
+  <div class="cta-contact">
+    <div class="cta-contact-box">
+      <h2>Envie de collaborer ?</h2>
+      <p>Que ce soit pour un projet photo, une identité visuelle ou du contenu pour vos réseaux sociaux, parlons-en ensemble !</p>
+      <a href="index.html#contact" class="cta-contact-btn">Me contacter →</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 Eliot SAURON – Tous droits réservés</p>
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    // ===== LOADER =====
+    window.addEventListener('load', () => {
+      const loader = document.querySelector('.page-loader');
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        setTimeout(() => {
+          loader.remove();
+        }, 500);
+      }, 800);
+    });
+
+    // ===== MENU MOBILE =====
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    menuToggle?.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+        navLinks.classList.remove('active');
+      }
+    });
+
+    // ===== FILTERS =====
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const creationCards = document.querySelectorAll('.creation-card');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const filter = button.getAttribute('data-filter');
+        
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        creationCards.forEach(card => {
+          const category = card.getAttribute('data-category');
+          
+          if (filter === 'all' || category === filter) {
+            card.classList.remove('hidden');
+            setTimeout(() => {
+              card.classList.add('visible');
+            }, 10);
+          } else {
+            card.classList.add('hidden');
+            card.classList.remove('visible');
+          }
+        });
+      });
+    });
+
+    // ===== CAROUSEL =====
+    function initCarousel(card) {
+      const track = card.querySelector('.carousel-track');
+      const images = card.querySelectorAll('.carousel-image');
+      const prevBtn = card.querySelector('.carousel-prev');
+      const nextBtn = card.querySelector('.carousel-next');
+      const indicatorsContainer = card.querySelector('.carousel-indicators');
+      
+      let currentIndex = 0;
+      const totalImages = images.length;
+      
+      // Créer les indicateurs
+      for (let i = 0; i < totalImages; i++) {
+        const indicator = document.createElement('span');
+        indicator.classList.add('indicator');
+        if (i === 0) indicator.classList.add('active');
+        indicator.addEventListener('click', () => goToSlide(i));
+        indicatorsContainer.appendChild(indicator);
+      }
+      
+      const indicators = card.querySelectorAll('.indicator');
+      
+      function updateCarousel() {
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        
+        indicators.forEach((indicator, index) => {
+          indicator.classList.toggle('active', index === currentIndex);
+        });
+      }
+      
+      function goToSlide(index) {
+        currentIndex = index;
+        updateCarousel();
+      }
+      
+      function nextSlide() {
+        currentIndex = (currentIndex + 1) % totalImages;
+        updateCarousel();
+      }
+      
+      function prevSlide() {
+        currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+        updateCarousel();
+      }
+      
+      prevBtn.addEventListener('click', prevSlide);
+      nextBtn.addEventListener('click', nextSlide);
+      
+      // Swipe sur mobile
+      let touchStartX = 0;
+      let touchEndX = 0;
+      
+      track.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      });
+      
+      track.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+      });
+      
+      function handleSwipe() {
+        if (touchEndX < touchStartX - 50) nextSlide();
+        if (touchEndX > touchStartX + 50) prevSlide();
+      }
+    }
+
+    // ===== BIO TOGGLE =====
+    function initBioToggle(card) {
+      const toggle = card.querySelector('.bio-toggle');
+      const content = card.querySelector('.bio-content');
+      
+      toggle.addEventListener('click', () => {
+        const isOpen = content.classList.contains('open');
+        
+        if (isOpen) {
+          content.classList.remove('open');
+          toggle.textContent = '+ d\'infos';
+        } else {
+          content.classList.add('open');
+          toggle.textContent = '− Moins d\'infos';
+        }
+      });
+    }
+
+    // ===== INTERSECTION OBSERVER =====
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          cardObserver.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // ===== INIT =====
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialiser les carousels et bio toggles
+      creationCards.forEach(card => {
+        initCarousel(card);
+        initBioToggle(card);
+        cardObserver.observe(card);
+      });
+
+      // Ajouter un délai d'apparition échelonné aux cartes
+      creationCards.forEach((card, index) => {
+        card.style.animationDelay = `${0.1 * index}s`;
+      });
+    });
+
+    // ===== SMOOTH SCROLL =====
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (!href || href === '#') return;
+        
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          const offset = 80;
+          const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
+        <div class="carousel-nav">
+          <button class="carousel-arrow carousel-prev" aria-label="Image précédente">‹</button>
+          <button class="carousel-arrow carousel-next" aria-label="Image suivante">›</button>
+        </div>
+        <div class="carousel-indicators"></div>
+      </div>
+      <h2 class="creation-title">Festival • Été 2024</h2>
+      <span class="bio-toggle">+ d'infos</span>
+      <div class="bio-content">
+        Couverture photo complète d'un festival de musique électronique en plein air. Captation des ambiances nocturnes, portraits d'artistes en backstage et moments forts sur scène.
+      </div>
+    </article>
+
+    <!-- CRÉATION 2 : Portrait studio -->
+    <article class="creation-card" data-category="photo">
+      <span class="category-badge">Photo</span>
+      <div class="image-carousel">
+        <div class="carousel-track">
+          <img src="img/creation2-1.jpg" alt="Portrait studio - Photo 1" class="carousel-image">
+          <img src="img/creation2-2.jpg" alt="Portrait studio - Photo 2" class="carousel-image">
+        </div>
+        <div class="carousel-nav">
+          <button class="carousel-arrow carousel-prev" aria-label="Image précédente">‹</button>
+          <button class="carousel-arrow carousel-next" aria-label="Image suivante">›</button>
+        </div>
+        <div class="carousel-indicators"></div>
+      </div>
+      <h2 class="creation-title">Portrait • Studio</h2>
+      <span class="bio-toggle">+ d'infos</span>
+      <div class="bio-content">
+        Série de portraits en studio pour un artiste local. Travail sur les jeux de lumière, création d'une atmosphère intimiste avec un éclairage doux.
+      </div>
+    </article>
+
+    <!-- CRÉATION 3 : Affiche événementielle -->
+    <article class="creation-card" data-category="graphisme">
+      <span class="category-badge">Graphisme</span>
+      <div class="image-carousel">
+        <div class="carousel-track">
+          <img src="img/creation3-1.jpg" alt="Affiche événementielle" class="carousel-image">
+          <img src="img/creation3-2.jpg" alt="Déclinaisons réseaux sociaux" class="carousel-image">
+          <img src="img/creation3-3.jpg" alt="Mockup final" class="carousel-image">
+        </div>
+        <div class="carousel-nav">
+          <button class="carousel-arrow carousel-prev" aria-label="Image précédente">‹</button>
+          <button class="carousel-arrow carousel-next" aria-label="Image suivante">›</button>
+        </div>
+        <div class="carousel-indicators"></div>
+      </div>
+      <h2 class="creation-title">Graphisme • Affiche</h2>
+      <span class="bio-toggle">+ d'infos</span>
+      <div class="bio-content">
+        Conception graphique d'une affiche pour un événement culturel local. Création d'une identité visuelle cohérente avec déclinaisons pour les réseaux sociaux.
+      </div>
+    </article>
+
+    <!-- CRÉATION 4 : Reportage mariage -->
+    <article class="creation-card" data-category="reportage">
+      <span class="category-badge">Reportage</span>
+      <div class="image-carousel">
+        <div class="carousel-track">
+          <img src="img/creation4-1.jpg" alt="Mariage - Cérémonie" class="carousel-image">
+          <img src="img/creation4-2.jpg" alt="Mariage - Portraits" class="carousel-image">
+          <img src="img/creation4-3.jpg" alt="Mariage - Réception" class="carousel-image">
+          <img src="img/creation4-4.jpg" alt="Mariage - Détails" class="carousel-image">
+        </div>
