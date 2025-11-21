@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eliot — Portfolio & Pro</title>
+  <title>Eliot SAURON — Créatif & Photographe</title>
   <style>
     /* ============================================
        VARIABLES
@@ -66,19 +66,19 @@
       width: 100%;
       height: 100%;
       background: 
-        radial-gradient(circle at 20% 50%, rgba(242, 161, 140, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(127, 166, 198, 0.1) 0%, transparent 50%);
+        radial-gradient(circle at 20% 50%, rgba(242, 161, 140, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(127, 166, 198, 0.08) 0%, transparent 50%);
       pointer-events: none;
       z-index: 0;
     }
 
     /* ============================================
-       HEADER
+       HEADER - Navigation améliorée
        ============================================ */
     header {
       position: sticky;
       top: 0;
-      background: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.75);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       z-index: 1000;
@@ -97,6 +97,7 @@
       z-index: 1;
     }
 
+    /* Logo avec animation subtile */
     .logo {
       display: flex;
       align-items: center;
@@ -111,25 +112,49 @@
       opacity: 0.8;
     }
 
+    .logo:hover .logo-svg {
+      animation: logoFloat 2s ease-in-out infinite;
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
     .logo-svg {
       width: 38px;
       height: 26px;
+      transition: var(--transition);
     }
 
+    /* Navigation links */
     .nav-links {
       display: flex;
-      gap: var(--gap-md);
+      gap: var(--gap-sm);
       list-style: none;
     }
 
     .nav-links a {
-      color: var(--gray-light);
+      color: var(--gray-medium);
       text-decoration: none;
       font-size: 15px;
       font-weight: 500;
-      padding: 8px 16px;
-      border-radius: 20px;
+      padding: 10px 20px;
+      border-radius: 25px;
       transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      width: 60%;
+      height: 2px;
+      background: var(--peach);
+      transition: transform 0.3s ease;
     }
 
     .nav-links a:hover {
@@ -137,25 +162,36 @@
       background: rgba(242, 161, 140, 0.1);
     }
 
+    .nav-links a:hover::after {
+      transform: translateX(-50%) scaleX(1);
+    }
+
+    /* Menu hamburger */
     .menu-toggle {
       display: none;
       background: none;
       border: none;
-      font-size: 24px;
+      font-size: 28px;
       cursor: pointer;
       color: var(--gray-dark);
+      padding: 8px;
+      transition: var(--transition);
+    }
+
+    .menu-toggle:hover {
+      color: var(--peach);
     }
 
     /* ============================================
-       HERO
+       HERO - Section d'introduction compacte
        ============================================ */
     .hero {
-      min-height: 85vh;
+      min-height: 60vh;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: var(--gap-xl) var(--gap-md);
+      padding: var(--gap-lg) var(--gap-md) var(--gap-md);
       position: relative;
       overflow: hidden;
     }
@@ -167,7 +203,7 @@
       right: -5%;
       width: 500px;
       height: 500px;
-      background: radial-gradient(circle, rgba(242, 161, 140, 0.15) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(242, 161, 140, 0.12) 0%, transparent 70%);
       border-radius: 50%;
       animation: float 8s ease-in-out infinite;
     }
@@ -179,7 +215,7 @@
       left: -5%;
       width: 400px;
       height: 400px;
-      background: radial-gradient(circle, rgba(127, 166, 198, 0.15) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(127, 166, 198, 0.12) 0%, transparent 70%);
       border-radius: 50%;
       animation: float 10s ease-in-out infinite reverse;
     }
@@ -199,42 +235,41 @@
     .hero-badge {
       display: inline-block;
       padding: 10px 24px;
-      background: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.6);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.7);
       border-radius: 50px;
       font-size: 14px;
       font-weight: 500;
       color: var(--peach);
       margin-bottom: var(--gap-md);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      box-shadow: var(--shadow-sm);
+      animation: fadeIn 1s ease 0.3s backwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .hero h1 {
-      font-size: clamp(36px, 6vw, 64px);
+      font-size: clamp(40px, 7vw, 72px);
       font-weight: 700;
       line-height: 1.1;
-      margin-bottom: var(--gap-sm);
+      margin-bottom: var(--gap-xs);
       background: linear-gradient(135deg, var(--blue) 0%, var(--peach) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      animation: fadeInUp 0.8s ease 0.1s backwards;
     }
 
     .hero-subtitle {
-      color: var(--peach);
-      font-size: clamp(20px, 3vw, 28px);
+      color: var(--gray-medium);
+      font-size: clamp(16px, 2.5vw, 20px);
       font-weight: 400;
       margin-bottom: var(--gap-md);
-    }
-
-    .hero p {
-      font-size: clamp(16px, 2vw, 18px);
-      color: var(--gray-medium);
-      margin-bottom: var(--gap-md);
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
+      animation: fadeInUp 0.8s ease 0.2s backwards;
     }
 
     .cta-buttons {
@@ -242,11 +277,14 @@
       gap: var(--gap-sm);
       justify-content: center;
       flex-wrap: wrap;
+      animation: fadeInUp 0.8s ease 0.3s backwards;
     }
 
     .cta-button {
-      display: inline-block;
-      padding: 16px 40px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 32px;
       background: linear-gradient(135deg, var(--peach) 0%, var(--peach-dark) 100%);
       color: var(--white);
       text-decoration: none;
@@ -255,6 +293,8 @@
       font-size: 16px;
       transition: var(--transition);
       box-shadow: var(--shadow-md);
+      min-width: 180px;
+      justify-content: center;
     }
 
     .cta-button:hover {
@@ -263,7 +303,7 @@
     }
 
     .cta-button.secondary {
-      background: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.8);
       backdrop-filter: blur(10px);
       color: var(--gray-dark);
       border: 2px solid rgba(242, 161, 140, 0.3);
@@ -274,53 +314,251 @@
       border-color: var(--peach);
     }
 
-    /* ============================================
-       CARTES CONCEPTUELLES
-       ============================================ */
-    .hero-concepts {
-      display: flex;
-      gap: var(--gap-md);
-      justify-content: center;
-      margin-top: var(--gap-lg);
-      flex-wrap: wrap;
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    .concept-card {
+    /* ============================================
+       ABOUT - Section visible immédiatement
+       ============================================ */
+    .about {
+      padding: var(--gap-lg) var(--gap-md);
+      position: relative;
+      z-index: 1;
+    }
+
+    .about-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: var(--gap-lg);
+      align-items: start;
       background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      padding: var(--gap-md);
+      backdrop-filter: blur(15px);
+      padding: var(--gap-lg);
       border-radius: var(--radius);
-      min-width: 180px;
-      max-width: 220px;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Photo de profil */
+    .profile-image {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      border: 3px solid rgba(255, 255, 255, 0.9);
+      position: sticky;
+      top: 100px;
+    }
+
+    .profile-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .profile-image:hover img {
+      transform: scale(1.05);
+    }
+
+    /* Contenu About */
+    .about-content h2 {
+      font-size: clamp(32px, 4vw, 42px);
+      margin-bottom: var(--gap-sm);
+      background: linear-gradient(135deg, var(--blue) 0%, var(--peach) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Bio courte */
+    .bio-short {
+      color: var(--gray-medium);
+      font-size: 17px;
+      line-height: 1.8;
+      margin-bottom: var(--gap-md);
+      font-weight: 400;
+    }
+
+    /* Bouton pour déplier bio longue */
+    .bio-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: rgba(242, 161, 140, 0.15);
+      border: 2px solid rgba(242, 161, 140, 0.3);
+      border-radius: 50px;
+      color: var(--peach);
+      font-weight: 500;
+      font-size: 15px;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-bottom: var(--gap-md);
+    }
+
+    .bio-toggle-btn:hover {
+      background: rgba(242, 161, 140, 0.25);
+      border-color: var(--peach);
+      transform: translateY(-2px);
+    }
+
+    .bio-toggle-btn .arrow {
+      transition: transform 0.3s ease;
+      font-size: 12px;
+    }
+
+    .bio-toggle-btn.active .arrow {
+      transform: rotate(180deg);
+    }
+
+    /* Bio longue dépliable */
+    .bio-long {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .bio-long.open {
+      max-height: 1000px;
+    }
+
+    .bio-long-content {
+      padding: var(--gap-md);
+      background: rgba(255, 245, 240, 0.5);
+      backdrop-filter: blur(5px);
+      border-radius: 12px;
+      margin-bottom: var(--gap-md);
+    }
+
+    .bio-long-content p {
+      color: var(--gray-medium);
+      font-size: 16px;
+      line-height: 1.8;
+      margin-bottom: var(--gap-sm);
+    }
+
+    .bio-long-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Qualités - Présentation créative */
+    .qualities-section {
+      margin-top: var(--gap-lg);
+    }
+
+    .qualities-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--gray-dark);
+      margin-bottom: var(--gap-md);
+      text-align: center;
+    }
+
+    .qualities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--gap-md);
+    }
+
+    .quality-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      padding: var(--gap-md);
+      border-radius: 16px;
       text-align: center;
       transition: var(--transition);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
     }
 
-    .concept-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-md);
-      background: rgba(255, 255, 255, 0.8);
+    .quality-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(242, 161, 140, 0.1) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
     }
 
-    .concept-icon {
-      font-size: 32px;
-      margin-bottom: var(--gap-xs);
+    .quality-card:hover::before {
+      opacity: 1;
+    }
+
+    .quality-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: var(--shadow-lg);
+      background: rgba(255, 255, 255, 0.9);
+      border-color: var(--peach);
+    }
+
+    .quality-icon {
+      font-size: 42px;
+      margin-bottom: var(--gap-sm);
       display: block;
+      filter: grayscale(0.3);
+      transition: var(--transition);
     }
 
-    .concept-title {
-      font-size: 16px;
+    .quality-card:hover .quality-icon {
+      filter: grayscale(0);
+      transform: scale(1.1);
+    }
+
+    .quality-title {
+      font-size: 18px;
       font-weight: 600;
       color: var(--peach);
-      margin-bottom: 6px;
+      margin-bottom: var(--gap-xs);
     }
 
-    .concept-text {
-      font-size: 13px;
+    .quality-description {
+      font-size: 14px;
       color: var(--gray-medium);
-      line-height: 1.5;
+      line-height: 1.6;
+    }
+
+    /* Compétences */
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--gap-xs);
+      margin-top: var(--gap-md);
+    }
+
+    .skill-tag {
+      padding: 10px 18px;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(242, 161, 140, 0.2);
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-dark);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .skill-tag:hover {
+      background: rgba(242, 161, 140, 0.2);
+      border-color: var(--peach);
+      transform: translateY(-2px);
     }
 
     /* ============================================
@@ -343,7 +581,6 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      text-shadow: 0 2px 20px rgba(242, 161, 140, 0.2);
     }
 
     .section-subtitle {
@@ -358,7 +595,7 @@
 
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: var(--gap-md);
     }
 
@@ -442,89 +679,6 @@
 
     .project-link:hover {
       gap: 12px;
-    }
-
-    /* ============================================
-       ABOUT
-       ============================================ */
-    .about {
-      padding: var(--gap-xl) var(--gap-md);
-      background: linear-gradient(to bottom, transparent 0%, rgba(255, 245, 240, 0.3) 100%);
-      position: relative;
-      z-index: 1;
-    }
-
-    .about-container {
-      max-width: 1000px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: var(--gap-lg);
-      align-items: center;
-      background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(10px);
-      padding: var(--gap-lg);
-      border-radius: var(--radius);
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: var(--shadow-md);
-    }
-
-    .profile-image {
-      width: 100%;
-      max-width: 280px;
-      aspect-ratio: 1;
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow-md);
-      border: 3px solid rgba(255, 255, 255, 0.8);
-    }
-
-    .profile-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .about-content h2 {
-      font-size: clamp(28px, 4vw, 38px);
-      margin-bottom: var(--gap-sm);
-      background: linear-gradient(135deg, var(--blue) 0%, var(--peach) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .about-content p {
-      color: var(--gray-medium);
-      font-size: 16px;
-      line-height: 1.8;
-      margin-bottom: var(--gap-sm);
-    }
-
-    .skills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--gap-xs);
-      margin-top: var(--gap-md);
-    }
-
-    .skill-tag {
-      padding: 10px 18px;
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(5px);
-      border: 1px solid rgba(242, 161, 140, 0.2);
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--gray-dark);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-      transition: var(--transition);
-    }
-
-    .skill-tag:hover {
-      background: rgba(242, 161, 140, 0.2);
-      border-color: var(--peach);
-      transform: translateY(-2px);
     }
 
     /* ============================================
@@ -645,75 +799,103 @@
     }
 
     /* ============================================
-       ANIMATIONS
-       ============================================ */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .fade-in {
-      opacity: 0;
-      animation: fadeInUp 0.8s ease forwards;
-    }
-
-    /* ============================================
        RESPONSIVE
        ============================================ */
+    @media (max-width: 1024px) {
+      .about-container {
+        grid-template-columns: 250px 1fr;
+        gap: var(--gap-md);
+      }
+
+      .qualities-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     @media (max-width: 768px) {
+      /* Menu mobile */
       .nav-links {
         position: fixed;
         top: 70px;
         right: -100%;
-        width: 250px;
+        width: 280px;
         height: calc(100vh - 70px);
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(20px);
         flex-direction: column;
         padding: var(--gap-md);
         box-shadow: var(--shadow-lg);
-        transition: var(--transition);
+        transition: right 0.3s ease;
+        border-left: 1px solid rgba(242, 161, 140, 0.2);
       }
 
       .nav-links.active {
         right: 0;
       }
 
+      .nav-links li {
+        width: 100%;
+      }
+
+      .nav-links a {
+        display: block;
+        width: 100%;
+        padding: 16px;
+        text-align: left;
+      }
+
       .menu-toggle {
         display: block;
       }
 
+      /* About responsive */
       .about-container {
         grid-template-columns: 1fr;
         text-align: center;
+        gap: var(--gap-md);
       }
 
       .profile-image {
         margin: 0 auto;
+        max-width: 250px;
+        position: static;
       }
 
-      .hero-concepts {
+      .qualities-grid {
+        grid-template-columns: 1fr;
         gap: var(--gap-sm);
       }
 
-      .concept-card {
-        min-width: 140px;
+      .hero {
+        min-height: 50vh;
+        padding: var(--gap-md);
       }
 
       .cta-buttons {
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
       }
 
       .cta-button {
         width: 100%;
-        max-width: 300px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .about-container {
+        padding: var(--gap-md);
+      }
+
+      .quality-card {
+        padding: var(--gap-sm);
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -731,8 +913,8 @@
         <span><strong>Eliot</strong> SAURON</span>
       </a>
       <ul class="nav-links" id="navLinks">
-        <li><a href="#projets">Projets</a></li>
         <li><a href="#about">À Propos</a></li>
+        <li><a href="#projets">Projets</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
       <button class="menu-toggle" id="menuToggle" aria-label="Menu de navigation">☰</button>
@@ -745,28 +927,81 @@
       <div class="hero-badge">Création visuelle</div>
       
       <h1><strong>Eliot</strong> SAURON</h1>
-      <p class="hero-subtitle">Créatif & Photographe</p>
-      <p>Portfolio évolutif — projets de création graphique, photographie événementielle & visuels originaux</p>
+      <p class="hero-subtitle">Créatif & Photographe | Portfolio évolutif — projets de création graphique, photographie événementielle & visuels originaux</p>
+      
       <div class="cta-buttons">
-        <a href="#projets" class="cta-button">Voir mes projets</a>
+        <a href="#projets" class="cta-button">Voir mes projets →</a>
         <a href="#contact" class="cta-button secondary">Me contacter</a>
       </div>
-      
-      <div class="hero-concepts">
-        <div class="concept-card">
-          <span class="concept-icon" aria-hidden="true">✦</span>
-          <div class="concept-title">Créativité</div>
-          <p class="concept-text">Des visuels uniques qui racontent votre histoire</p>
+    </div>
+  </section>
+
+  <!-- ABOUT - Visible sans scroller -->
+  <section class="about" id="about">
+    <div class="about-container">
+      <div class="profile-image">
+        <img src="profil.jpeg" alt="Portrait d'Eliot SAURON">
+      </div>
+      <div class="about-content">
+        <h2>À propos</h2>
+        
+        <!-- Bio courte - Visible immédiatement -->
+        <p class="bio-short">
+          Je suis Eliot, étudiant en communication et passionné par l'image : photographie d'événements, portraits, visuels pour les réseaux sociaux et projets graphiques sur mesure. J'aime construire des univers cohérents, doux et soignés.
+        </p>
+        
+        <!-- Bouton pour déplier la bio longue -->
+        <button class="bio-toggle-btn" id="bioToggle">
+          <span>En savoir plus</span>
+          <span class="arrow">▼</span>
+        </button>
+        
+        <!-- Bio longue - Dépliable -->
+        <div class="bio-long" id="bioLong">
+          <div class="bio-long-content">
+            <p>
+              Mon parcours créatif a débuté par une passion pour la photographie événementielle. J'ai rapidement étendu mes compétences au graphisme et à la création d'identités visuelles complètes. Chaque projet est pour moi une opportunité de raconter une histoire unique à travers des visuels qui marquent.
+            </p>
+            <p>
+              Ce portfolio évolue en même temps que mes projets : festivals, collaborations, commandes et expérimentations créatives. Je travaille avec attention sur chaque détail, du premier croquis jusqu'à la mise en ligne, pour créer des expériences visuelles mémorables et authentiques.
+            </p>
+            <p>
+              Si vous cherchez quelqu'un pour donner une identité visuelle à vos idées, créer du contenu engageant pour vos réseaux sociaux, ou capturer l'essence de vos événements, vous êtes au bon endroit. Travaillons ensemble !
+            </p>
+          </div>
         </div>
-        <div class="concept-card">
-          <span class="concept-icon" aria-hidden="true">◈</span>
-          <div class="concept-title">Authenticité</div>
-          <p class="concept-text">Un style personnel et reconnaissable</p>
+        
+        <!-- Compétences -->
+        <div class="skills">
+          <span class="skill-tag">📸 Photographie événementielle</span>
+          <span class="skill-tag">✨ Retouche (Lightroom)</span>
+          <span class="skill-tag">🎨 Graphisme & mise en page</span>
+          <span class="skill-tag">📱 Réseaux sociaux</span>
+          <span class="skill-tag">💡 Création de visuels</span>
         </div>
-        <div class="concept-card">
-          <span class="concept-icon" aria-hidden="true">◆</span>
-          <div class="concept-title">Engagement</div>
-          <p class="concept-text">Passionné par chaque projet</p>
+      </div>
+    </div>
+
+    <!-- Qualités - Présentation créative et visuelle -->
+    <div class="qualities-section">
+      <h3 class="qualities-title">Ce qui me définit</h3>
+      <div class="qualities-grid">
+        <div class="quality-card">
+          <span class="quality-icon">✦</span>
+          <div class="quality-title">Créativité</div>
+          <p class="quality-description">Des visuels uniques qui racontent votre histoire avec originalité et impact</p>
+        </div>
+        
+        <div class="quality-card">
+          <span class="quality-icon">◈</span>
+          <div class="quality-title">Authenticité</div>
+          <p class="quality-description">Un style personnel et reconnaissable qui respecte votre identité</p>
+        </div>
+        
+        <div class="quality-card">
+          <span class="quality-icon">◆</span>
+          <div class="quality-title">Engagement</div>
+          <p class="quality-description">Passionné par chaque projet, du concept à la réalisation finale</p>
         </div>
       </div>
     </div>
@@ -777,37 +1012,16 @@
     <h2 class="section-title">Projets Récents</h2>
     <p class="section-subtitle">Découvrez mes dernières créations en photographie, graphisme et design visuel</p>
     <div class="projects-grid">
-      <article class="project-card fade-in">
+      <article class="project-card">
         <div class="project-image">
           <img src="img/accueil-creations.jpg" alt="Aperçu de mes créations">
         </div>
         <div class="project-content">
           <h3 class="project-title">Mes créations</h3>
-          <p class="project-description">Photos, graphisme, portraits d'événements… Clique pour découvrir la galerie complète !</p>
+          <p class="project-description">Photos, graphisme, portraits d'événements… Découvrez la galerie complète de mes projets !</p>
           <a href="creations.html" class="project-link">Voir la galerie →</a>
         </div>
       </article>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="about" id="about">
-    <div class="about-container">
-      <div class="profile-image">
-        <img src="profil.jpeg" alt="Portrait d'Eliot SAURON">
-      </div>
-      <div class="about-content">
-        <h2>À propos</h2>
-        <p>Je suis Eliot, étudiant en communication et passionné par l'image : photographie d'événements, portraits, visuels pour les réseaux sociaux et projets graphiques sur mesure. J'aime construire des univers cohérents, doux et soignés, du premier croquis jusqu'à la mise en ligne.</p>
-        <p>Ce portfolio évolue en même temps que mes projets : festivals, collaborations, commandes et expérimentations créatives. Si vous cherchez quelqu'un pour donner une identité visuelle à vos idées, vous êtes au bon endroit.</p>
-        <div class="skills">
-          <span class="skill-tag">Photographie événementielle</span>
-          <span class="skill-tag">Retouche (Lightroom)</span>
-          <span class="skill-tag">Graphisme & mise en page</span>
-          <span class="skill-tag">Réseaux sociaux</span>
-          <span class="skill-tag">Création de visuels</span>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -844,7 +1058,9 @@
 
   <!-- JAVASCRIPT -->
   <script>
-    // Menu mobile
+    // ================================================
+    // MENU MOBILE
+    // ================================================
     const menuToggle = document.getElementById('menuToggle');
     const navLinks = document.getElementById('navLinks');
 
@@ -852,25 +1068,43 @@
       navLinks.classList.toggle('active');
     });
 
+    // Fermer le menu au clic sur un lien
     document.querySelectorAll('.nav-links a').forEach(link => {
       link.addEventListener('click', () => {
         navLinks.classList.remove('active');
       });
     });
 
-    // Animation au scroll
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
+    // Fermer le menu au clic en dehors
+    document.addEventListener('click', (e) => {
+      if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+        navLinks.classList.remove('active');
+      }
+    });
 
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    // ================================================
+    // BIO DÉPLIABLE
+    // ================================================
+    const bioToggle = document.getElementById('bioToggle');
+    const bioLong = document.getElementById('bioLong');
 
-    // Smooth scroll
+    bioToggle?.addEventListener('click', () => {
+      const isOpen = bioLong.classList.contains('open');
+      
+      if (isOpen) {
+        bioLong.classList.remove('open');
+        bioToggle.innerHTML = '<span>En savoir plus</span><span class="arrow">▼</span>';
+        bioToggle.classList.remove('active');
+      } else {
+        bioLong.classList.add('open');
+        bioToggle.innerHTML = '<span>Voir moins</span><span class="arrow">▼</span>';
+        bioToggle.classList.add('active');
+      }
+    });
+
+    // ================================================
+    // SMOOTH SCROLL
+    // ================================================
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
@@ -887,6 +1121,32 @@
           });
         }
       });
+    });
+
+    // ================================================
+    // ANIMATION AU SCROLL (Intersection Observer)
+    // ================================================
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observer les éléments à animer
+    document.querySelectorAll('.project-card, .quality-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
     });
   </script>
 
