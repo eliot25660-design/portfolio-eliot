@@ -73,117 +73,6 @@
     }
 
     /* ============================================
-       ANIMATIONS RAIL/GLISSEMENT
-       ============================================ */
-    @keyframes slideInLeft {
-      from {
-        opacity: 0;
-        transform: translateX(-60px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    @keyframes slideInRight {
-      from {
-        opacity: 0;
-        transform: translateX(60px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    @keyframes slideInBottom {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes slideInTop {
-      from {
-        opacity: 0;
-        transform: translateY(-40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* ANIMATION FLEUR QUI POUSSE POUR LES TITRES */
-    @keyframes flowerGrow {
-      0% {
-        opacity: 0;
-        transform: translateY(30px) scale(0.8);
-        filter: blur(10px);
-      }
-      50% {
-        opacity: 0.5;
-        transform: translateY(15px) scale(0.95);
-        filter: blur(5px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        filter: blur(0);
-      }
-    }
-
-    @keyframes flowerBloom {
-      0% {
-        letter-spacing: -0.5em;
-        opacity: 0;
-      }
-      40% {
-        opacity: 0.6;
-      }
-      100% {
-        letter-spacing: normal;
-        opacity: 1;
-      }
-    }
-
-    .flower-grow {
-      opacity: 0;
-      animation: flowerGrow 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
-                 flowerBloom 1s ease-out forwards;
-      animation-play-state: paused;
-    }
-
-    .slide-left {
-      opacity: 0;
-      animation: slideInLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-      animation-play-state: paused;
-    }
-
-    .slide-right {
-      opacity: 0;
-      animation: slideInRight 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-      animation-play-state: paused;
-    }
-
-    .slide-bottom {
-      opacity: 0;
-      animation: slideInBottom 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-      animation-play-state: paused;
-    }
-
-    .slide-top {
-      opacity: 0;
-      animation: slideInTop 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-      animation-play-state: paused;
-    }
-
-    /* ============================================
        LOADER
        ============================================ */
     .page-loader {
@@ -295,14 +184,12 @@
       transition: var(--transition);
     }
 
-    /* Animation logo SVG - EN CONTINU */
+    /* Animation logo SVG */
     .logo-svg path {
       stroke-dasharray: 200;
       stroke-dashoffset: 200;
-      animation: 
-        draw-logo 2s ease-in-out forwards,
-        glow-pulse 3s ease-in-out 2s infinite,
-        float-logo 4s ease-in-out 2s infinite;
+      animation: draw-logo 2s ease-in-out forwards,
+                 glow-pulse 3s ease-in-out 2s infinite;
     }
 
     @keyframes draw-logo {
@@ -313,19 +200,10 @@
 
     @keyframes glow-pulse {
       0%, 100% {
-        filter: drop-shadow(0 0 3px rgba(242, 161, 140, 0.5));
+        filter: drop-shadow(0 0 2px rgba(242, 161, 140, 0.6));
       }
       50% {
-        filter: drop-shadow(0 0 10px rgba(242, 161, 140, 0.9));
-      }
-    }
-
-    @keyframes float-logo {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-5px);
+        filter: drop-shadow(0 0 8px rgba(242, 161, 140, 0.9));
       }
     }
 
@@ -338,6 +216,15 @@
 
     @keyframes fade-in-text {
       to { opacity: 1; }
+    }
+
+    .logo:hover .logo-svg path {
+      animation: logo-bounce 0.6s ease;
+    }
+
+    @keyframes logo-bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
 
     .nav-links {
@@ -393,6 +280,10 @@
 
     .menu-toggle:hover {
       color: var(--peach);
+    }
+
+    .menu-toggle:active {
+      transform: scale(0.9);
     }
 
     /* ============================================
@@ -456,7 +347,12 @@
       color: var(--peach);
       margin-bottom: var(--gap-md);
       box-shadow: var(--shadow-sm);
-      animation-delay: 0.1s;
+      opacity: 0;
+      animation: fadeIn 1s ease 0.3s forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
 
     .hero h1 {
@@ -468,7 +364,8 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      animation-delay: 0.2s;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease 0.1s forwards;
     }
 
     .hero-subtitle {
@@ -476,7 +373,8 @@
       font-size: clamp(16px, 2.5vw, 20px);
       font-weight: 400;
       margin-bottom: var(--gap-md);
-      animation-delay: 0.3s;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease 0.2s forwards;
     }
 
     .cta-buttons {
@@ -484,7 +382,8 @@
       gap: var(--gap-sm);
       justify-content: center;
       flex-wrap: wrap;
-      animation-delay: 0.4s;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease 0.3s forwards;
     }
 
     .cta-button {
@@ -541,6 +440,17 @@
     .cta-button.secondary:hover {
       background: rgba(242, 161, 140, 0.2);
       border-color: var(--peach);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* ============================================
@@ -667,9 +577,6 @@
       margin-bottom: 0;
     }
 
-    /* ============================================
-       SKILLS - BOUTONS INTERACTIFS
-       ============================================ */
     .skills {
       display: flex;
       flex-wrap: wrap;
@@ -687,151 +594,36 @@
       font-weight: 500;
       color: var(--gray-dark);
       box-shadow: var(--shadow-sm);
-      transition: all 0.3s ease;
+      transition: var(--transition);
       position: relative;
-      overflow: visible;
-      cursor: pointer;
+      overflow: hidden;
       opacity: 0;
       transform: scale(0.8);
     }
 
+    .skill-tag.visible {
+      animation: tag-pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    @keyframes tag-pop-in {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .skill-tag:nth-child(1) { animation-delay: 0.1s; }
+    .skill-tag:nth-child(2) { animation-delay: 0.15s; }
+    .skill-tag:nth-child(3) { animation-delay: 0.2s; }
+    .skill-tag:nth-child(4) { animation-delay: 0.25s; }
+    .skill-tag:nth-child(5) { animation-delay: 0.3s; }
+
     .skill-tag:hover {
       background: rgba(242, 161, 140, 0.25);
       box-shadow: 0 0 20px rgba(242, 161, 140, 0.3);
-      transform: translateY(-3px) scale(1.05);
-      border-color: var(--peach);
+      transform: translateY(-3px);
     }
 
-    .skill-tag:active {
-      transform: translateY(-1px) scale(1.02);
-    }
-
-    /* Tooltip au survol automatique après 1 seconde */
-    .skill-tag::after {
-      content: '👆 Cliquez pour en savoir plus';
-      position: absolute;
-      bottom: calc(100% + 10px);
-      left: 50%;
-      transform: translateX(-50%) scale(0.8);
-      background: var(--gray-dark);
-      color: white;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 12px;
-      white-space: nowrap;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      z-index: 10;
-    }
-
-    .skill-tag.show-tooltip::after {
-      opacity: 1;
-      transform: translateX(-50%) scale(1);
-    }
-
-    /* MODAL POPUP COMPÉTENCES */
-    .skill-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(8px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-      padding: 20px;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .skill-modal.active {
-      display: flex;
-      animation: fadeIn 0.3s ease forwards;
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
-    .skill-modal-content {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px);
-      border-radius: var(--radius);
-      padding: var(--gap-lg);
-      max-width: 500px;
-      width: 100%;
-      box-shadow: var(--shadow-lg);
-      border: 2px solid var(--peach);
-      transform: scale(0.9);
-      animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    }
-
-    @keyframes popIn {
-      to { transform: scale(1); }
-    }
-
-    .skill-modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: var(--gap-md);
-    }
-
-    .skill-modal-title {
-      font-size: 24px;
-      color: var(--peach);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .skill-modal-close {
-      background: rgba(242, 161, 140, 0.1);
-      border: none;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 20px;
-      color: var(--gray-dark);
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .skill-modal-close:hover {
-      background: var(--peach);
-      color: white;
-      transform: rotate(90deg);
-    }
-
-    .skill-modal-body {
-      color: var(--gray-medium);
-      font-size: 16px;
-      line-height: 1.7;
-    }
-
-    .skill-modal-body p {
-      margin-bottom: var(--gap-sm);
-    }
-
-    .skill-modal-body ul {
-      margin: var(--gap-sm) 0;
-      padding-left: 24px;
-    }
-
-    .skill-modal-body li {
-      margin-bottom: 8px;
-    }
-
-    /* ============================================
-       QUALITIES
-       ============================================ */
     .qualities-section {
       margin-top: var(--gap-lg);
     }
@@ -958,7 +750,30 @@
       overflow: hidden;
       box-shadow: var(--shadow-sm);
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
       position: relative;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+      );
+      transition: left 0.7s ease;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .project-card:hover::before {
+      left: 100%;
     }
 
     .project-card:hover {
@@ -976,6 +791,16 @@
       justify-content: center;
       overflow: hidden;
       position: relative;
+    }
+
+    .project-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 100%);
     }
 
     .project-image img {
@@ -1007,50 +832,19 @@
       margin-bottom: var(--gap-sm);
     }
 
-    /* BOUTON VOIR LA GALERIE - OPTIMISÉ ET TRÈS VISIBLE */
     .project-link {
+      color: var(--peach);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-      padding: 18px 40px;
-      margin-top: var(--gap-sm);
-      background: linear-gradient(135deg, var(--peach) 0%, var(--peach-dark) 100%);
-      color: var(--white);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 17px;
-      border-radius: 50px;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 4px 15px rgba(242, 161, 140, 0.3);
-      position: relative;
-      overflow: hidden;
-      min-height: 56px;
-    }
-
-    .project-link::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      transition: left 0.6s ease;
-    }
-
-    .project-link:hover::before {
-      left: 100%;
+      gap: 6px;
+      transition: gap 0.3s ease;
     }
 
     .project-link:hover {
-      transform: translateY(-4px) scale(1.03);
-      box-shadow: 0 8px 25px rgba(242, 161, 140, 0.5);
-    }
-
-    .project-link:active {
-      transform: translateY(-2px) scale(1.01);
+      gap: 12px;
     }
 
     /* ============================================
@@ -1178,12 +972,12 @@
     .fade-slide {
       opacity: 0;
       transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .fade-slide.visible {
       opacity: 1;
       transform: translateY(0);
-      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     /* ============================================
@@ -1266,9 +1060,12 @@
         width: 100%;
       }
 
-      .project-link {
-        font-size: 16px;
-        padding: 16px 32px;
+      .project-card::before {
+        display: none;
+      }
+
+      .cta-button::before {
+        display: none;
       }
     }
 
@@ -1287,10 +1084,6 @@
 
       .projects-grid {
         grid-template-columns: 1fr;
-      }
-
-      .skill-modal-content {
-        padding: var(--gap-md);
       }
     }
 
@@ -1341,12 +1134,12 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
-      <div class="hero-badge slide-top">Création visuelle</div>
+      <div class="hero-badge">Création visuelle</div>
       
-      <h1 class="flower-grow"><strong>Eliot</strong> SAURON</h1>
-      <p class="hero-subtitle slide-right">Créatif & Photographe | Portfolio évolutif – projets de création graphique, photographie événementielle & visuels originaux</p>
+      <h1><strong>Eliot</strong> SAURON</h1>
+      <p class="hero-subtitle">Créatif & Photographe | Portfolio évolutif – projets de création graphique, photographie événementielle & visuels originaux</p>
       
-      <div class="cta-buttons slide-bottom">
+      <div class="cta-buttons">
         <a href="#projets" class="cta-button">Voir mes projets →</a>
         <a href="#contact" class="cta-button secondary">Me contacter</a>
       </div>
@@ -1356,13 +1149,13 @@
   <!-- ABOUT -->
   <section class="about" id="about">
     <div class="about-container fade-slide">
-      <div class="profile-image slide-left">
+      <div class="profile-image">
         <img src="profil.jpeg" alt="Portrait d'Eliot SAURON">
       </div>
       <div class="about-content">
-        <h2 class="flower-grow">À propos</h2>
+        <h2>À propos</h2>
         
-        <p class="bio-short slide-bottom">
+        <p class="bio-short">
           Je suis Eliot, étudiant en communication et passionné par l'image : photographie d'événements, portraits, visuels pour les réseaux sociaux et projets graphiques sur mesure. J'aime construire des univers cohérents, doux et soignés.
         </p>
         
@@ -1386,17 +1179,17 @@
         </div>
         
         <div class="skills">
-          <span class="skill-tag" data-skill="photo">📸 Photographie événementielle</span>
-          <span class="skill-tag" data-skill="retouche">✨ Retouche (Lightroom)</span>
-          <span class="skill-tag" data-skill="graphisme">🎨 Graphisme & mise en page</span>
-          <span class="skill-tag" data-skill="social">📱 Réseaux sociaux</span>
-          <span class="skill-tag" data-skill="creation">💡 Création de visuels</span>
+          <span class="skill-tag">📸 Photographie événementielle</span>
+          <span class="skill-tag">✨ Retouche (Lightroom)</span>
+          <span class="skill-tag">🎨 Graphisme & mise en page</span>
+          <span class="skill-tag">📱 Réseaux sociaux</span>
+          <span class="skill-tag">💡 Création de visuels</span>
         </div>
       </div>
     </div>
 
     <div class="qualities-section">
-      <h3 class="qualities-title flower-grow">Ce qui me définit</h3>
+      <h3 class="qualities-title">Ce qui me définit</h3>
       <div class="qualities-grid">
         <div class="quality-card fade-slide">
           <span class="quality-icon">✦</span>
@@ -1421,8 +1214,8 @@
 
   <!-- PROJECTS -->
   <section class="projects" id="projets">
-    <h2 class="section-title flower-grow">Projets Récents</h2>
-    <p class="section-subtitle slide-bottom">Découvrez mes dernières créations en photographie, graphisme et design visuel</p>
+    <h2 class="section-title fade-slide">Projets Récents</h2>
+    <p class="section-subtitle fade-slide">Découvrez mes dernières créations en photographie, graphisme et design visuel</p>
     <div class="projects-grid">
       <article class="project-card fade-slide">
         <div class="project-image">
@@ -1431,10 +1224,7 @@
         <div class="project-content">
           <h3 class="project-title">Mes créations</h3>
           <p class="project-description">Photos, graphisme, portraits d'événements… Découvrez la galerie complète de mes projets !</p>
-          <a href="creations.html" class="project-link">
-            <span>🎨 Voir toute la galerie</span>
-            <span>→</span>
-          </a>
+          <a href="creations.html" class="project-link">Voir la galerie →</a>
         </div>
       </article>
     </div>
@@ -1443,7 +1233,7 @@
   <!-- CONTACT -->
   <section class="contact" id="contact">
     <div class="contact-wrapper fade-slide">
-      <h2 class="flower-grow">Contact</h2>
+      <h2>Contact</h2>
       <p>Un projet, une idée, une collaboration ? Écrivez-moi, je vous réponds rapidement.</p>
       <form class="contact-form" action="https://formspree.io/f/mblwgzve" method="POST">
         <div class="form-group">
@@ -1471,93 +1261,8 @@
     <p>&copy; 2025 Eliot SAURON – Tous droits réservés</p>
   </footer>
 
-  <!-- MODAL COMPÉTENCES -->
-  <div class="skill-modal" id="skillModal">
-    <div class="skill-modal-content">
-      <div class="skill-modal-header">
-        <h3 class="skill-modal-title" id="modalTitle"></h3>
-        <button class="skill-modal-close" id="closeModal" aria-label="Fermer">×</button>
-      </div>
-      <div class="skill-modal-body" id="modalBody"></div>
-    </div>
-  </div>
-
   <!-- JAVASCRIPT -->
   <script>
-    // ===== DONNÉES COMPÉTENCES =====
-    const skillsData = {
-      photo: {
-        icon: '📸',
-        title: 'Photographie événementielle',
-        content: `
-          <p>Spécialisé dans la capture de moments uniques lors d'événements : festivals, mariages, concerts et célébrations.</p>
-          <ul>
-            <li>📷 Reportages complets de A à Z</li>
-            <li>🎭 Captation des émotions et ambiances</li>
-            <li>🌅 Maîtrise de la lumière naturelle et artificielle</li>
-            <li>⚡ Réactivité et discrétion sur le terrain</li>
-          </ul>
-          <p>Mon objectif : raconter votre histoire à travers des images authentiques et intemporelles.</p>
-        `
-      },
-      retouche: {
-        icon: '✨',
-        title: 'Retouche professionnelle',
-        content: `
-          <p>Expert en post-production avec Adobe Lightroom pour sublimer vos images tout en gardant leur naturel.</p>
-          <ul>
-            <li>🎨 Correction colorimétrique avancée</li>
-            <li>✨ Retouche beauté subtile et professionnelle</li>
-            <li>🌈 Création de presets personnalisés</li>
-            <li>⚖️ Balance parfaite entre technique et esthétique</li>
-          </ul>
-          <p>Chaque image est travaillée avec soin pour révéler son plein potentiel.</p>
-        `
-      },
-      graphisme: {
-        icon: '🎨',
-        title: 'Graphisme & Design',
-        content: `
-          <p>Création d'identités visuelles complètes et de supports graphiques modernes et impactants.</p>
-          <ul>
-            <li>🎯 Logos et chartes graphiques</li>
-            <li>📄 Affiches, flyers et supports print</li>
-            <li>💼 Identité visuelle pour entreprises</li>
-            <li>🖼️ Mise en page créative et harmonieuse</li>
-          </ul>
-          <p>Des designs qui racontent votre histoire et captivent votre audience.</p>
-        `
-      },
-      social: {
-        icon: '📱',
-        title: 'Contenu pour réseaux sociaux',
-        content: `
-          <p>Création de visuels optimisés et engageants pour booster votre présence en ligne.</p>
-          <ul>
-            <li>📊 Posts Instagram, Facebook, LinkedIn</li>
-            <li>🎬 Stories et contenus dynamiques</li>
-            <li>📈 Formats adaptés à chaque plateforme</li>
-            <li>💫 Design cohérent avec votre identité</li>
-          </ul>
-          <p>Du contenu qui attire l'œil et génère de l'engagement.</p>
-        `
-      },
-      creation: {
-        icon: '💡',
-        title: 'Création de visuels sur mesure',
-        content: `
-          <p>Conception de visuels originaux parfaitement adaptés à vos besoins et votre vision.</p>
-          <ul>
-            <li>✨ Illustrations et compositions uniques</li>
-            <li>🎨 Montages créatifs et artistiques</li>
-            <li>🌟 Visuels pour événements spéciaux</li>
-            <li>🔥 Concepts innovants et percutants</li>
-          </ul>
-          <p>Donnez vie à vos idées avec des créations qui vous ressemblent.</p>
-        `
-      }
-    };
-
     // ===== LOADER =====
     window.addEventListener('load', () => {
       const loader = document.querySelector('.page-loader');
@@ -1586,67 +1291,6 @@
     document.addEventListener('click', (e) => {
       if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
         navLinks.classList.remove('active');
-      }
-    });
-
-    // ===== MODAL COMPÉTENCES AVEC TOOLTIP AUTO =====
-    const modal = document.getElementById('skillModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalBody = document.getElementById('modalBody');
-    const closeModal = document.getElementById('closeModal');
-    const skillTags = document.querySelectorAll('.skill-tag');
-
-    // Gestion du tooltip automatique après 1 seconde de survol
-    let hoverTimeout;
-    
-    skillTags.forEach(tag => {
-      // Au survol : afficher tooltip après 0.5 seconde
-      tag.addEventListener('mouseenter', () => {
-        hoverTimeout = setTimeout(() => {
-          tag.classList.add('show-tooltip');
-        }, 500);
-      });
-
-      // Quitter le survol : retirer tooltip
-      tag.addEventListener('mouseleave', () => {
-        clearTimeout(hoverTimeout);
-        tag.classList.remove('show-tooltip');
-      });
-
-      // Au clic : ouvrir la modal
-      tag.addEventListener('click', () => {
-        clearTimeout(hoverTimeout);
-        tag.classList.remove('show-tooltip');
-        
-        const skillType = tag.getAttribute('data-skill');
-        const skill = skillsData[skillType];
-        
-        if (skill) {
-          modalTitle.innerHTML = `${skill.icon} ${skill.title}`;
-          modalBody.innerHTML = skill.content;
-          modal.classList.add('active');
-          document.body.style.overflow = 'hidden';
-        }
-      });
-    });
-
-    closeModal.addEventListener('click', () => {
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
-    });
-
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-      }
-    });
-
-    // Échap pour fermer la modal
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('active')) {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
       }
     });
 
@@ -1687,93 +1331,27 @@
       });
     });
 
-    // ===== INTERSECTION OBSERVER - ANIMATIONS AU SCROLL =====
+    // ===== INTERSECTION OBSERVER =====
     const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+      threshold: 0.15,
+      rootMargin: '0px 0px -80px 0px'
     };
 
     const animateOnScroll = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-          
-          // Ne pas unobserve pour permettre les réanimations
-          // animateOnScroll.unobserve(entry.target);
+          animateOnScroll.unobserve(entry.target);
         }
       });
     }, observerOptions);
 
-    // Observer séparé pour les animations slide (une seule fois)
-    const slideObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.animationPlayState = 'running';
-          slideObserver.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: 0.15,
-      rootMargin: '0px 0px -80px 0px'
-    });
-
-    // Observer pour les animations "fleur qui pousse"
-    const flowerObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.animationPlayState = 'running';
-          flowerObserver.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: 0.2,
-      rootMargin: '0px 0px -50px 0px'
-    });
-
     document.addEventListener('DOMContentLoaded', () => {
-      // Observer tous les éléments avec animations
-      const fadeElements = document.querySelectorAll('.fade-slide, .quality-card');
-      fadeElements.forEach(el => {
+      const elementsToAnimate = document.querySelectorAll('.fade-slide, .skill-tag');
+      
+      elementsToAnimate.forEach(el => {
         animateOnScroll.observe(el);
       });
-
-      // Observer les animations slide
-      const slideElements = document.querySelectorAll('.slide-left, .slide-right, .slide-bottom, .slide-top');
-      slideElements.forEach(el => {
-        el.style.animationPlayState = 'paused';
-        slideObserver.observe(el);
-      });
-
-      // Observer les animations "fleur qui pousse"
-      const flowerElements = document.querySelectorAll('.flower-grow');
-      flowerElements.forEach(el => {
-        el.style.animationPlayState = 'paused';
-        flowerObserver.observe(el);
-      });
-
-      // Animer les skill tags avec décalage
-      const aboutContainer = document.querySelector('.about-container');
-      if (aboutContainer) {
-        const skillTagsToAnimate = aboutContainer.querySelectorAll('.skill-tag');
-        
-        const skillObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              skillTagsToAnimate.forEach((tag, index) => {
-                setTimeout(() => {
-                  tag.style.opacity = '1';
-                  tag.style.transform = 'scale(1)';
-                  tag.style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-                }, index * 100);
-              });
-              skillObserver.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.3 });
-        
-        skillObserver.observe(aboutContainer);
-      }
     });
   </script>
 
